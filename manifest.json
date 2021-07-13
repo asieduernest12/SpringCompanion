@@ -3,10 +3,7 @@
 	"version": "1.0",
 	"description": "Build an Extension!",
 	"permissions": ["activeTab", "declarativeContent", "storage", "contextMenus","scripting"],
-	// "background": {
-	//     "scripts": ["background.js"],
-	//     "persistent": false
-	// },
+
 	"background": {
 		"service_worker": "background.js"
 	},
