@@ -19,7 +19,7 @@ Feel free to contribute suggestion, bug reports, improvements and any other reso
 
 
 # Installtion
-Todo: privode installation and usage steps
+Todo: provide installation and usage steps
 
 # References
 [Chrome Extensions](https://developer.chrome.com/docs/extensions)
