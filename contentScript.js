@@ -49,7 +49,7 @@ function transformTranslationResults(translation_results) {
 	});
 }
 function showHistoryModal({ title, payload }) {
-	let payload_html = transformTranslationResults(payload);
+	let payload_html = transformTranslationResults(Object.values(payload)).join("");
 	let content = makeModalContent(title, payload_html);
 	showModal(content);
 }
@@ -57,6 +57,7 @@ function showHistoryModal({ title, payload }) {
 function dismissModal() {
 	let foundation = document.querySelector(".sc_modal_foundation");
 	foundation.classList.remove("show_foundation");
+	foundation.innerHTML = "";
 }
 
 function showModal(modal_content) {
@@ -70,7 +71,7 @@ function makeModalContent(title, translations_html) {
 		<div id="popup2" class="overlay light" style="display: contents">
 		<div class="popup">
 		<a class="cancel" href="#"></a>
-				<h2>${title}</h2>
+				<h2>${title.replace("SHOW_", "")}</h2>
 				<div class="content">
 				${translations_html}
 				</div>
