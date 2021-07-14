@@ -1,6 +1,7 @@
 console.log("contentscript injected");
 
 document.addEventListener("selectionchange", selectionHandler);
+document.addEventListener("click", dismissEvent);
 insertSCModalFoundation();
 
 function selectionHandler(event) {
@@ -15,7 +16,6 @@ function selectionHandler(event) {
 chrome.runtime.onMessage.addListener((req, sender, res) => {
 	console.log("responding to render message");
 
-	debugger;
 	switch (req.title) {
 		case "SHOW_TRANSLATION": {
 			showTranslationModal(req);
@@ -67,9 +67,9 @@ function showModal(modal_content) {
 
 function makeModalContent(title, translations_html) {
 	return `
-		<div id="popup2" class="overlay light">
-			<a class="cancel" href="#"></a>
-			<div class="popup">
+		<div id="popup2" class="overlay light" style="display: contents">
+		<div class="popup">
+		<a class="cancel" href="#"></a>
 				<h2>${title}</h2>
 				<div class="content">
 				${translations_html}
@@ -84,4 +84,12 @@ function insertSCModalFoundation() {
 	foundation.classList.add("sc_modal_foundation");
 	document.querySelector("body").appendChild(foundation);
 	console.log("foundation inserted", document.querySelector(".sc_modal_foundation"));
+}
+
+function dismissEvent(event) {
+	let foundation = event.target.closest(".popup");
+	console.log("foundation", foundation);
+	if (!foundation && document.querySelector(".show_foundation")) {
+		dismissModal();
+	}
 }

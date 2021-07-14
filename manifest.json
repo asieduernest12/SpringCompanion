@@ -2,7 +2,7 @@
 	"name": "SpringCompanion",
 	"version": "1.0",
 	"description": "Build an Extension!",
-	"permissions": ["activeTab", "declarativeContent", "storage", "contextMenus","scripting"],
+	"permissions": ["activeTab", "declarativeContent", "storage", "contextMenus", "scripting"],
 
 	"background": {
 		"service_worker": "background.js"
@@ -25,7 +25,7 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["*://*/"],
+			"matches": ["<all_urls>", "*://*/"],
 			"css": ["content_style.css"],
 			"js": ["contentScript.js"]
 		}

@@ -11,10 +11,12 @@ chrome.runtime.onInstalled.addListener(async function (tab, statusInfo, response
 		});
 	});
 
-	chrome.scripting.executeScript({
-		target: { tabId: tab.id },
-		files: ["contentScript.js"],
-	});
+	// debugger;
+	// console.log({ statusInfo });
+	// chrome.scripting.executeScript({
+	// 	target: { tabId: tab.id },
+	// 	files: ["contentScript.js"],
+	// });
 });
 
 chrome.runtime.onMessage.addListener((req, sender, res) => {
