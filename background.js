@@ -19,7 +19,7 @@ chrome.runtime.onInstalled.addListener(async function (tab, statusInfo, response
 
 chrome.runtime.onMessage.addListener((req, sender, res) => {
 	//update context menu with selection payload
-	if (req.title == "text_selected") {
+	if (req.title == "TEXT_SELECTED") {
 		console.log("responding to text_selected msg");
 		chrome.contextMenus.update("translate_context", { title: `Translate: ${req.payload}`, onclick: translateContextClickHandler });
 	}
@@ -39,7 +39,13 @@ async function translateWord(_word) {
 	let response = await fetchTranslation(translator.makeRequestObj(word));
 	let parsed_response = translator.parseResponse(response);
 	console.log("all clear and response is", parsed_response);
-	saveQuery(word, parsed_response);
+	saveTranslation(word, parsed_response);
+
+	chrome.tabs.query({ active: true, currentWindow: true }, function ([tab]) {
+		chrome.tabs.sendMessage(tab.id, { title: "SHOW_TRANSLATION", payload: { input: word, output: parsed_response, example: "" } }, function (response) {
+			console.log(response.farewell);
+		});
+	});
 	// alert("successful " + parsed_response);
 }
 
@@ -107,7 +113,7 @@ function TranlationFactory() {
 	}
 }
 
-function saveQuery(query, result) {
+function saveTranslation(query, result) {
 	chrome.storage.sync.set({ query, result }, () => {
 		console.log("query saved");
 	});
